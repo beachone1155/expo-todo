@@ -11,8 +11,8 @@ import {
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import type { Todo, CreateTodoInput, Priority } from '@/types/todo';
 import { PriorityLabels, PriorityColors, Priority } from '@/types/todo';
+import type { Todo, CreateTodoInput } from '@/types/todo';
 
 interface TodoFormProps {
   onSubmit: (todo: CreateTodoInput) => void;
