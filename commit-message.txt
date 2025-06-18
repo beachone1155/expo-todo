@@ -1,0 +1,6 @@
+fix: Priority型のインポートエラーを修正し、依存関係を更新
+
+- TodoForm.tsxでPriority型のインポートを追加
+- styles内でのPriority.MEDIUMの直接参照を修正
+- @react-native-async-storage/async-storageを2.1.2に更新
+- ビルドエラーを解決 
