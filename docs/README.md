@@ -16,19 +16,24 @@
 ### 🚀 デプロイメント
 - **[デプロイメントガイド](deployment.md)** - EAS Build、App Store、Google Play Storeへのデプロイ手順
 
+### 🔄 Git Workflow
+- **[Git Workflow](git-workflow.md)** - Git Flowワークフローとブランチ戦略
+
 ## 🎯 ドキュメントの使い方
 
 ### 新規開発者の方へ
 
 1. **[プロジェクト構造](project-structure.md)** から始めて、プロジェクトの全体像を把握
-2. **[開発ガイド](development-guide.md)** で開発環境をセットアップ
-3. **[API仕様書](api-specification.md)** でコンポーネントやフックの使用方法を確認
+2. **[Git Workflow](git-workflow.md)** でブランチ戦略とワークフローを理解
+3. **[開発ガイド](development-guide.md)** で開発環境をセットアップ
+4. **[API仕様書](api-specification.md)** でコンポーネントやフックの使用方法を確認
 
 ### 機能追加・修正の方へ
 
-1. **[開発ガイド](development-guide.md)** のコーディング規約を確認
-2. **[API仕様書](api-specification.md)** で既存のAPIを確認
-3. 必要に応じて **[プロジェクト構造](project-structure.md)** でファイル配置を確認
+1. **[Git Workflow](git-workflow.md)** でブランチ作成とプルリクエストの手順を確認
+2. **[開発ガイド](development-guide.md)** のコーディング規約を確認
+3. **[API仕様書](api-specification.md)** で既存のAPIを確認
+4. 必要に応じて **[プロジェクト構造](project-structure.md)** でファイル配置を確認
 
 ### デプロイメント担当の方へ
 
@@ -44,6 +49,7 @@
 - APIの仕様を変更した時
 - プロジェクト構造を変更した時
 - デプロイメント手順を変更した時
+- Gitワークフローを変更した時
 
 ### 更新手順
 
@@ -63,6 +69,9 @@
 | 構造 | [プロジェクト構造](project-structure.md) |
 | コーディング規約 | [開発ガイド](development-guide.md) |
 | トラブルシューティング | [デプロイメントガイド](deployment.md) |
+| Git | [Git Workflow](git-workflow.md) |
+| ブランチ | [Git Workflow](git-workflow.md) |
+| プルリクエスト | [Git Workflow](git-workflow.md) |
 
 ## 📞 サポート
 
