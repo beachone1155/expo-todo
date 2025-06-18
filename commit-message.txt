@@ -1,5 +1,5 @@
-fix: Priorityの重複インポートエラーを修正
+fix: useTodo.tsでPriorityのインポートエラーを修正
 
-- TodoForm.tsxでPriorityの重複インポートを削除
-- typeインポートと通常のインポートを分離
+- Priorityをtypeインポートから通常のインポートに変更
+- Object.values(Priority)の使用に対応
 - ビルドエラーを解決 

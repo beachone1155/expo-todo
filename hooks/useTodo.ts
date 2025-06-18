@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { TodoStorage } from '@/utils/storage';
+import { Priority } from '@/types/todo';
 import type { 
   Todo, 
   CreateTodoInput, 
   UpdateTodoInput, 
   TodoFilter, 
   TodoSort, 
-  TodoStats,
-  Priority 
+  TodoStats
 } from '@/types/todo';
 
 interface UseTodoReturn {
