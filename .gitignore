@@ -37,3 +37,21 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# JetBrains IDE settings
+.idea/
+
+# VSCode settings
+.vscode/
+
+# log, tmp files
+*.log
+*.tmp
+*.temp
+
+# Vim swap files
+*.swp
+*.swo
+
+# JetBrains project files (念のため)
+*.iml
