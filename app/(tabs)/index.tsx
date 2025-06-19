@@ -1,16 +1,17 @@
 import { TodoForm } from '@/components/TodoForm';
 import { TodoList } from '@/components/TodoList';
+import { useCatContext } from '@/hooks/CatContext';
 import { useTodo } from '@/hooks/useTodo';
 import type { CreateTodoInput, Todo } from '@/types/todo';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
-    Modal,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 export default function TodoScreen() {
@@ -25,6 +26,7 @@ export default function TodoScreen() {
     refreshTodos,
     stats,
   } = useTodo();
+  const cat = useCatContext();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -77,6 +79,10 @@ export default function TodoScreen() {
   const handleToggleTodo = async (id: string) => {
     try {
       await toggleTodo(id);
+      const todo = filteredAndSortedTodos.find(t => t.id === id);
+      if (todo && !todo.completed) {
+        cat.addXp(5);
+      }
     } catch (error) {
       console.error('Failed to toggle todo:', error);
     }
