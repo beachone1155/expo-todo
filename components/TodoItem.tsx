@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import type { Todo } from '@/types/todo';
-import { PriorityLabels, PriorityColors } from '@/types/todo';
+import { PriorityColors, PriorityLabels } from '@/types/todo';
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { Alert, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface TodoItemProps {
   todo: Todo;
@@ -26,14 +26,20 @@ export const TodoItem: React.FC<TodoItemProps> = ({
   showTags = true,
 }) => {
   const handleDelete = () => {
-    Alert.alert(
-      'Todoを削除',
-      'このTodoを削除しますか？',
-      [
-        { text: 'キャンセル', style: 'cancel' },
-        { text: '削除', style: 'destructive', onPress: () => onDelete(todo.id) },
-      ]
-    );
+    if (Platform.OS === 'web') {
+      if (window.confirm('このTodoを削除しますか？')) {
+        onDelete(todo.id);
+      }
+    } else {
+      Alert.alert(
+        'Todoを削除',
+        'このTodoを削除しますか？',
+        [
+          { text: 'キャンセル', style: 'cancel' },
+          { text: '削除', style: 'destructive', onPress: () => onDelete(todo.id) },
+        ]
+      );
+    }
   };
 
   const formatDate = (date: Date) => {
