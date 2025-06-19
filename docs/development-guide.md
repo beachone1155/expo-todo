@@ -303,19 +303,80 @@ export const Colors = {
 
 ## テスト
 
-### テストファイルの配置
+### テスト計画
 
-```
-__tests__/
-├── components/
-│   └── TodoItem.test.tsx
-├── hooks/
-│   └── useTodo.test.ts
-└── utils/
-    └── validation.test.ts
-```
+- **テスト対象**: Todo作成・編集・削除・完了切替、猫成長システム（XP加算・成長UI）、永続化（AsyncStorage）、UI表示（タブ・リスト・フォーム）
+- **テスト観点**:
+  - 正常系: 各機能が期待通り動作するか
+  - 異常系: 未入力・長文・不正値などのバリデーション
+  - UI: 表示崩れや誤動作がないか
+  - 永続化: リロード・再起動後もデータが保持されるか
+- **テスト方法**:
+  - ユニットテスト（Jest＋React Native Testing Library推奨）
+  - 手動E2Eテスト（Expo Go/エミュレータ/実機）
 
-### テストの実行
+### 自動テスト導入・実行手順
+
+1. 必要パッケージのインストール
+
+   ```bash
+   npm install --save-dev jest @testing-library/react-native @testing-library/jest-native @types/jest ts-jest
+   ```
+
+2. Jest設定ファイル作成（jest.config.js）
+
+   ```js
+   module.exports = {
+     preset: 'react-native',
+     transform: {
+       '^.+\\.(js|ts|tsx)$': 'ts-jest',
+     },
+     testMatch: [
+       '**/__tests__/**/*.test.(ts|tsx|js)',
+       '**/?(*.)+(spec|test).(ts|tsx|js)'
+     ],
+     setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
+   };
+   ```
+
+3. テストディレクトリ・サンプルテスト作成
+
+   ```
+   __tests__/
+     components/
+       TodoItem.test.tsx
+     hooks/
+       useTodo.test.ts
+   ```
+
+   例: `__tests__/components/TodoItem.test.tsx`
+
+   ```tsx
+   import React from 'react';
+   import { render } from '@testing-library/react-native';
+   import { TodoItem } from '../../components/TodoItem';
+
+   test('タイトルが表示される', () => {
+     const { getByText } = render(<TodoItem todo={{ id: '1', title: 'テスト', completed: false, createdAt: new Date(), updatedAt: new Date() }} onToggle={() => {}} onDelete={() => {}} />);
+     expect(getByText('テスト')).toBeTruthy();
+   });
+   ```
+
+4. package.jsonにテストスクリプト追加
+
+   ```json
+   "scripts": {
+     "test": "jest"
+   }
+   ```
+
+5. テスト実行
+
+   ```bash
+   npm test
+   ```
+
+### 既存のテスト実行方法
 
 ```bash
 # 全テスト実行
@@ -327,6 +388,12 @@ npm test -- --watch
 # カバレッジ
 npm test -- --coverage
 ```
+
+### 注意：Expo + Jestの現状の限界と推奨運用
+
+- Expo/React Nativeの最新環境では、一部の依存パッケージ（expo-modules-core等）がESM形式で配布されており、Jest（CJSベース）での完全な自動テスト実行が困難な場合があります。
+- そのため、現状では「ロジック部分（hooks/utils等）のみユニットテスト」「UIや統合テストは手動またはE2E（Detox等）で補完」する運用を推奨します。
+- Jest/Expoの公式アップデートや、テスト戦略の最新情報も随時確認してください。
 
 ## デバッグ
 
