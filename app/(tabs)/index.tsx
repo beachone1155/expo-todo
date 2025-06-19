@@ -4,15 +4,18 @@ import { useCatContext } from '@/hooks/CatContext';
 import { useTodo } from '@/hooks/useTodo';
 import type { CreateTodoInput, Todo } from '@/types/todo';
 import { Ionicons } from '@expo/vector-icons';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
 import {
   Modal,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TodoScreen() {
   const {
@@ -27,6 +30,8 @@ export default function TodoScreen() {
     stats,
   } = useTodo();
   const cat = useCatContext();
+  const insets = useSafeAreaInsets();
+  const tabBarHeight = useBottomTabBarHeight();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -93,12 +98,6 @@ export default function TodoScreen() {
       {/* ヘッダー */}
       <View style={styles.header}>
         <Text style={styles.title}>Todo</Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setShowAddModal(true)}
-        >
-          <Ionicons name="add" size={24} color="#fff" />
-        </TouchableOpacity>
       </View>
 
       {/* 統計情報 */}
@@ -139,6 +138,20 @@ export default function TodoScreen() {
         refreshing={loading}
         emptyMessage="新しいTodoを追加してみましょう！"
       />
+
+      {/* 右下の追加ボタン */}
+      <TouchableOpacity
+        style={[
+          styles.fab,
+          Platform.OS === 'ios'
+            ? { bottom: 32 + insets.bottom + tabBarHeight }
+            : { bottom: 32 + insets.bottom }
+        ]}
+        onPress={() => setShowAddModal(true)}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="add" size={32} color="#fff" />
+      </TouchableOpacity>
 
       {/* 追加モーダル */}
       <Modal
@@ -222,14 +235,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
-  addButton: {
-    backgroundColor: '#007AFF',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   statsContainer: {
     flexDirection: 'row',
     backgroundColor: '#fff',
@@ -282,5 +287,21 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 4,
+  },
+  fab: {
+    position: 'absolute',
+    right: 24,
+    bottom: 32,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
 });
