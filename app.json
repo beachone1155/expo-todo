@@ -1,22 +1,39 @@
 {
   "expo": {
-    "name": "expo-todo",
-    "slug": "expo-todo",
+    "name": "Todo Cat",
+    "slug": "todo-cat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "expotodo",
+    "scheme": "todocat",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "description": "タスク管理と猫育成を組み合わせた、楽しく続けられるTodoアプリ",
+    "primaryColor": "#4A90E2",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.beachone1155.todocat",
+      "buildNumber": "1",
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch"],
+        "CFBundleLocalizations": ["ja"],
+        "CFBundleDevelopmentRegion": "ja_JP"
+      }
     },
     "android": {
+      "package": "com.beachone1155.todocat",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": []
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +54,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "your-project-id"
+      }
+    },
+    "owner": "beachone1155"
   }
 }
