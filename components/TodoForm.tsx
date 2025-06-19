@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import type { CreateTodoInput, Todo } from '@/types/todo';
+import { Priority, PriorityColors, PriorityLabels } from '@/types/todo';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { PriorityLabels, PriorityColors, Priority } from '@/types/todo';
-import type { Todo, CreateTodoInput } from '@/types/todo';
 
 interface TodoFormProps {
   onSubmit: (todo: CreateTodoInput) => void;
   onCancel?: () => void;
-  initialValues?: Partial<Todo>;
+  initialData?: Todo;
   mode?: 'create' | 'edit';
   loading?: boolean;
 }
@@ -25,21 +24,21 @@ interface TodoFormProps {
 export const TodoForm: React.FC<TodoFormProps> = ({
   onSubmit,
   onCancel,
-  initialValues,
+  initialData,
   mode = 'create',
   loading = false,
 }) => {
-  const [title, setTitle] = useState(initialValues?.title || '');
-  const [description, setDescription] = useState(initialValues?.description || '');
-  const [priority, setPriority] = useState<Priority>(initialValues?.priority || Priority.MEDIUM);
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [description, setDescription] = useState(initialData?.description || '');
+  const [priority, setPriority] = useState<Priority>(initialData?.priority || Priority.MEDIUM);
 
   useEffect(() => {
-    if (initialValues) {
-      setTitle(initialValues.title || '');
-      setDescription(initialValues.description || '');
-      setPriority(initialValues.priority || Priority.MEDIUM);
+    if (initialData) {
+      setTitle(initialData.title || '');
+      setDescription(initialData.description || '');
+      setPriority(initialData.priority || Priority.MEDIUM);
     }
-  }, [initialValues]);
+  }, [initialData]);
 
   const handleSubmit = () => {
     if (!title.trim()) {

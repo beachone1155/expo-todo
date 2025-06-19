@@ -1,17 +1,17 @@
+import { TodoForm } from '@/components/TodoForm';
+import { TodoList } from '@/components/TodoList';
+import { useTodo } from '@/hooks/useTodo';
+import type { CreateTodoInput, Todo } from '@/types/todo';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  SafeAreaView,
+    Modal,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { TodoList } from '@/components/TodoList';
-import { TodoForm } from '@/components/TodoForm';
-import { useTodo } from '@/hooks/useTodo';
-import type { CreateTodoInput } from '@/types/todo';
 
 export default function TodoScreen() {
   const {
@@ -19,6 +19,7 @@ export default function TodoScreen() {
     loading,
     error,
     addTodo,
+    updateTodo,
     toggleTodo,
     deleteTodo,
     refreshTodos,
@@ -26,6 +27,8 @@ export default function TodoScreen() {
   } = useTodo();
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [formLoading, setFormLoading] = useState(false);
 
   const handleAddTodo = async (todoInput: CreateTodoInput) => {
@@ -41,7 +44,26 @@ export default function TodoScreen() {
   };
 
   const handleEditTodo = (id: string) => {
-    console.log('Edit todo:', id);
+    const todo = filteredAndSortedTodos.find(t => t.id === id);
+    if (todo) {
+      setEditingTodo(todo);
+      setShowEditModal(true);
+    }
+  };
+
+  const handleUpdateTodo = async (todoInput: CreateTodoInput) => {
+    if (!editingTodo) return;
+    
+    try {
+      setFormLoading(true);
+      await updateTodo(editingTodo.id, todoInput);
+      setShowEditModal(false);
+      setEditingTodo(null);
+    } catch (error) {
+      console.error('Failed to update todo:', error);
+    } finally {
+      setFormLoading(false);
+    }
   };
 
   const handleDeleteTodo = async (id: string) => {
@@ -134,6 +156,40 @@ export default function TodoScreen() {
             mode="create"
             loading={formLoading}
           />
+        </SafeAreaView>
+      </Modal>
+
+      {/* 編集モーダル */}
+      <Modal
+        visible={showEditModal}
+        animationType="slide"
+        presentationStyle="pageSheet"
+      >
+        <SafeAreaView style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Todoを編集</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setShowEditModal(false);
+                setEditingTodo(null);
+              }}
+              style={styles.closeButton}
+            >
+              <Ionicons name="close" size={24} color="#666" />
+            </TouchableOpacity>
+          </View>
+          {editingTodo && (
+            <TodoForm
+              onSubmit={handleUpdateTodo}
+              onCancel={() => {
+                setShowEditModal(false);
+                setEditingTodo(null);
+              }}
+              mode="edit"
+              initialData={editingTodo}
+              loading={formLoading}
+            />
+          )}
         </SafeAreaView>
       </Modal>
     </SafeAreaView>
