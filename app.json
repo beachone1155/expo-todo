@@ -20,8 +20,12 @@
       "bundleIdentifier": "com.beachone1155.todocat",
       "buildNumber": "1",
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"],
-        "CFBundleLocalizations": ["ja"],
+        "UIBackgroundModes": [
+          "fetch"
+        ],
+        "CFBundleLocalizations": [
+          "ja"
+        ],
         "CFBundleDevelopmentRegion": "ja_JP"
       }
     },
@@ -60,7 +64,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "your-project-id"
+        "projectId": "f4b2d348-7b8d-4354-a183-efd964055564"
       }
     },
     "owner": "beachone1155"
